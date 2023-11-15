@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.sprite import Sprite
 
 class Alien(Sprite):
@@ -18,3 +19,19 @@ class Alien(Sprite):
 
       # 存储外星人的精确水平位置。
       self.x = float(self.rect.x)
+      self.move_speed=ai_game.settings.alien_speed
+
+  def update(self):
+    self.random_move() 
+
+  def draw_alien(self):
+    pygame.draw.rect(self.screen,self.color,self.rect)    
+
+  def random_move(self):
+    result = random.randrange(3)
+    if result==0:
+      self.rect.y+=move_speed
+    elif result==1:
+      self.rect.x-=move_speed
+    elif result==2:
+      self.rect.x+=move_speed

@@ -4,6 +4,8 @@ from setting import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from game_stats import Game_stats
+from button import Button
 
 class AlienInvasion:
   """管理游戏资源和行为类"""
@@ -11,6 +13,7 @@ class AlienInvasion:
   def __init__(self):
     pygame.init()
     self.settings=Settings()
+    self.stats=Game_stats(self)
     #设置窗口大小
     self.screen=pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height),pygame.RESIZABLE)
 
@@ -27,6 +30,7 @@ class AlienInvasion:
     self.bullets=pygame.sprite.Group()
     self.aliens=pygame.sprite.Group()
     self._create_fleet()
+    self.play_button=Button(self,"Play")
 
   def run_game(self):
     while True:
@@ -46,7 +50,7 @@ class AlienInvasion:
       alien.x=alien_witdth+2*alien_witdth*alien_number
       alien.rect.x=alien.x
       self.aliens.add(alien)
-      
+
 
 
   def _check_events(self):
@@ -104,6 +108,9 @@ class AlienInvasion:
     self.aliens.draw(self.screen)
     for bullet in self.bullets.sprites():
       bullet.draw_bullet()
+      
+    if not self.stats.game_active:
+      self.play_button.draw_button()  
     #让最近绘制屏幕可见
     pygame.display.flip()
 
