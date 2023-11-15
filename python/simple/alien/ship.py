@@ -33,6 +33,7 @@ class Ship:
         if self.rect.y > self.screen_rect.height - self.rect.height:
             self.rect.y = self.screen_rect.height - self.rect.height
 
+
     def update(self):
         self._update_move()
 

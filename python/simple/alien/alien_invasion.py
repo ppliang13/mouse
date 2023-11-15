@@ -26,7 +26,7 @@ class AlienInvasion:
         # 说明
         pygame.display.set_caption("Alien Invasion")
         # 设置背景颜色
-        self.bg_color = (self.settings.bg_color)
+        self.bg_color = self.settings.bg_color
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
@@ -35,22 +35,30 @@ class AlienInvasion:
 
     def run_game(self):
         while True:
+            # 检查事件修改参数
             self._check_events()
+            # 飞船移动
             self.ship.update()
-            self._update_screen()
+            # 子弹移动
             self.bullets.update()
+            # 外星人移动
+            self.aliens.update()
+            # 重新绘制
+            self._update_screen()
 
+    # 创建外星人群
     def _create_fleet(self):
         alien = Alien(self)
-        alien_witdth = alien.rect.width
-        availab_aliens_x = self.settings.screen_width - (2 * alien_witdth)
-        number_aliens_x = availab_aliens_x // (2 * alien_witdth)
+        alien_width = alien.rect.width
+        available_aliens_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_aliens_x // (2 * alien_width)
         for alien_number in range(number_aliens_x):
             alien = Alien(self)
-            alien.x = alien_witdth + 2 * alien_witdth * alien_number
+            alien.x = alien_width + 2 * alien_width * alien_number
             alien.rect.x = alien.x
             self.aliens.add(alien)
 
+    '''step1：检查事件'''
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -98,7 +106,9 @@ class AlienInvasion:
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
 
+
     def _update_screen(self):
+
         # 每次循环重新绘制屏幕
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
