@@ -1,0 +1,17 @@
+{
+  "person": {
+    "name": "Alice",
+    "age": 30,
+    "isStudent": false
+  },
+  "address": {
+    "city": "Wonderland",
+    "street": "123 Main St",
+    "zipcode": "45678"
+  },
+  "hobbies": ["reading", "traveling", "photography"],
+  "contacts": {
+    "email": "alice@example.com",
+    "phone": "+123456789"
+  }
+}
