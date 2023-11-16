@@ -21,9 +21,9 @@ class Settings:
         self.bullet_color = (60, 60, 60)
 
         # alien settings
-        self.alien_speed = 1.0
+        self.alien_speed = 0.7
         self.alien_max_hurt = 10
         self.alien_max_blood = 10
         self.alien_max_refresh_num = 10
-        # 1000ms
-        self.alien_refresh_num = 1000
+        # 10s
+        self.alien_refresh_time = 6

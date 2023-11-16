@@ -6,11 +6,11 @@ from pygame.sprite import Sprite
 
 class Alien(Sprite):
     """表示单个外星人的类。"""
-
     def __init__(self, ai_game):
         """初始化外星人并设置其起始位置。"""
         super().__init__()
         self.screen = ai_game.screen
+        self.screen_rect = ai_game.screen.get_rect()
 
         # 加载外星人图像并设置其rect属性
         self.image = pygame.image.load('images/alien.bmp')
@@ -22,10 +22,10 @@ class Alien(Sprite):
 
         # 存储外星人的精确水平位置。
         self.x = float(self.rect.x)
+
         self.move_speed = ai_game.settings.alien_speed
         # 随机运动参数
         self.angle = random.uniform(0, 2 * math.pi)
-
 
     def update(self):
         self.random_move()
@@ -39,5 +39,15 @@ class Alien(Sprite):
         self.angle += angle_change
 
         # 根据新角度移动
-        self.rect.x += int(self.move_speed * math.cos(self.angle))
-        self.rect.y += int(self.move_speed * math.sin(self.angle))
+        random_x = math.cos(self.angle)
+        random_y = math.sin(self.angle)
+        if random_x > 0:
+            self.rect.x += self.move_speed
+        else:
+            self.rect.x -= self.move_speed
+        if random_y > 0:
+            self.rect.y += self.move_speed
+        if self.rect.x < 0:
+            self.rect.x = 0
+        elif self.rect.x > self.screen_rect.width - self.rect.width:
+            self.rect.x = self.screen_rect.width - self.rect.width

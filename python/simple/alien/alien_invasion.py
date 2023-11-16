@@ -6,10 +6,13 @@ from bullet import Bullet
 from alien import Alien
 from game_stats import Game_stats
 from button import Button
+import time
+import random
 
 
 class AlienInvasion:
     """管理游戏资源和行为类"""
+
     def __init__(self):
         pygame.init()
         self.settings = Settings()
@@ -30,10 +33,11 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
-        self._create_fleet()
         self.play_button = Button(self, "Play")
 
     def run_game(self):
+        timestamp = int(time.time())
+        print(timestamp)
         while True:
             # 检查事件修改参数
             self._check_events()
@@ -43,15 +47,20 @@ class AlienInvasion:
             self.bullets.update()
             # 外星人移动
             self.aliens.update()
-            # 重新绘制
+            # 外星人增加
+            if timestamp == int(time.time()):
+                self._create_fleet()
+                timestamp += self.settings.alien_refresh_time
+                # 重新绘制
+            pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
             self._update_screen()
 
     # 创建外星人群
     def _create_fleet(self):
         alien = Alien(self)
         alien_width = alien.rect.width
-        available_aliens_x = self.settings.screen_width - (2 * alien_width)
-        number_aliens_x = available_aliens_x // (2 * alien_width)
+        refresh_num = self.settings.alien_max_refresh_num
+        number_aliens_x = random.randint(int(0.2 * refresh_num), refresh_num)
         for alien_number in range(number_aliens_x):
             alien = Alien(self)
             alien.x = alien_width + 2 * alien_width * alien_number
@@ -59,6 +68,7 @@ class AlienInvasion:
             self.aliens.add(alien)
 
     '''step1：检查事件'''
+
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -105,7 +115,6 @@ class AlienInvasion:
             for bullet in self.bullets.copy():
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
-
 
     def _update_screen(self):
 
