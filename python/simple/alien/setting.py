@@ -9,7 +9,7 @@ class Settings:
         self.bg_color = (230, 230, 230)
 
         # ship settings
-        self.ship_speed = 1.5
+        self.ship_speed = 3
         self.ship_limit = 3
         self.ship_blood = 10
 
@@ -26,4 +26,4 @@ class Settings:
         self.alien_max_blood = 10
         self.alien_max_refresh_num = 10
         # 10s
-        self.alien_refresh_time = 6
+        self.alien_refresh_time = 15
