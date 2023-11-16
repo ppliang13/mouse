@@ -6,6 +6,7 @@ from bullet import Bullet
 from alien import Alien
 from game_stats import Game_stats
 from button import Button
+from scoreboard import Scoreboard
 import time
 import random
 
@@ -34,6 +35,7 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self.play_button = Button(self, "Play")
+        self.sb = Scoreboard(self)
 
     def run_game(self):
         timestamp = int(time.time())
@@ -53,13 +55,17 @@ class AlienInvasion:
             elif len(self.aliens) == 0:
                 self._create_fleet()
 
-            pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+            if pygame.sprite.groupcollide(self.bullets, self.aliens, True, True):
+                self.stats.score += 1
+                self.sb.prep_score()
 
             # 游戏结束
-            if self._game_over():
-                sys.exit()
+            self._game_over()
             # 重新绘制
             self._update_screen()
+
+            # 游戏开始 进行阻塞
+            self._start_game()
 
     # 创建外星人群
     def _create_fleet(self):
@@ -125,10 +131,12 @@ class AlienInvasion:
     # 游戏结束
     def _game_over(self):
         if self._aline_over():
-            return True
+            self._reset_status()
+            return False
         if self._ship_crash_alien():
-            return True
-        return False
+            self._reset_status()
+            return False
+        return True
 
     # 外星人到达
     def _aline_over(self):
@@ -147,6 +155,7 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         self.aliens.draw(self.screen)
+        self.sb.show_score()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
@@ -156,19 +165,25 @@ class AlienInvasion:
         pygame.display.flip()
 
     def _start_game(self):
-        while True:
-            if not self.stats.game_active:
-                time.sleep(1)
-            else:
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN and self.play_button.rect.collidepoint(
-                            pygame.mouse.get_pos()):
-                        self.stats.game_active = True
+        while not self.stats.game_active:
+            time.sleep(0.5)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN and self.play_button.rect.collidepoint(
+                        pygame.mouse.get_pos()):
+                    self.stats.game_active = True
+                    pygame.mouse.set_visible(False)
 
     def _reset_status(self):
+        self.play_button = Button(self, "Play Again")
+        self.stats.game_active = False
         self.ship = Ship(self)
         self.aliens.empty()
         self.bullets.empty()
+        pygame.mouse.set_visible(True)
+        self.stats.score = 0
+        self.sb.prep_score()
 
 
 if __name__ == '__main__':
