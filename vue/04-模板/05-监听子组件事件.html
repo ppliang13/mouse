@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Event Example</title>
+</head>
+<body>
+
+<div id="app">
+    <parent-component></parent-component>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script>
+    // 子组件
+    const ChildComponent = {
+        template: `<button @click="triggerEvent">触发事件</button>`,
+        methods: {
+            triggerEvent() {
+                // 触发自定义事件
+                this.$emit('custom-event', 'Hello from Child!');
+            }
+        }
+    };
+
+    // 父组件
+    const ParentComponent = {
+        data() {
+            return {
+                messageFromChild: ''
+            };
+        },
+        template: `
+          <div>
+            <p>消息来自子组件: {{ messageFromChild }}</p>
+            <child-component @custom-event="handleCustomEvent"></child-component>
+          </div>`,
+        components: {
+            'child-component': ChildComponent
+        },
+        methods: {
+            handleCustomEvent(message) {
+                this.messageFromChild = message;
+            }
+        }
+    };
+
+    Vue.createApp(ParentComponent).mount('#app');
+</script>
+
+</body>
+</html>

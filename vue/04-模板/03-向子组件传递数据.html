@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子组件传递数据</title>
+</head>
+<body>
+<div id="app">
+    <demo text="自我控制最强者的本能"></demo>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const vm = Vue.createApp({
+        components: {
+            'demo': {
+                props:['text'],
+                template:'<h3>{{text}}</h3>'
+            }
+        }
+    }).mount("#app");
+</script>
+</body>
+</html>

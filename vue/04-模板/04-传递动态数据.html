@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <my-demo v-bind="info"></my-demo>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const vm = Vue.createApp({
+        data() {
+            return {
+                info: {
+                    name: "李四",
+                    position: "系统管理员",
+                    year: 10
+                }
+            }
+        }
+    });
+
+    vm.component('my-demo', {
+        props: {
+            name: {
+                type: String,
+                required: true
+            },
+            position: {
+                type: String,
+                default: "无"
+            },
+            year: {
+                type: Number,
+                default: 0
+            }
+        },
+
+        template:
+                `<h1>局部组件的数据绑定</h1>
+                <div>
+                  <p>姓名:{{ name }}</p>
+                  <p>职位:{{ position }}</p>
+                  <p>年份:<input v-model="year"></p>
+                </div>`
+    });
+
+    // 绑定组件 放在最后
+    vm.mount("#app");
+</script>
+</body>
+</html>

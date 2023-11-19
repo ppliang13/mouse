@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局组件</title>
+</head>
+<body>
+<div id="app">
+    <demo></demo>
+    <count-button></count-button>
+    <count-button></count-button>
+    <count-button></count-button>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const vm=Vue.createApp({});
+
+    vm.component('demo',{
+        template:'<h2>一寸光阴一寸金</h2>'
+    });
+
+    vm.component('count-button',{
+        data(){
+            return {
+                count:0
+            }
+        },
+        template: '<button v-on:click="count++">{{count}}</button>'
+    });
+    vm.mount('#app');
+</script>
+</body>
+</html>
