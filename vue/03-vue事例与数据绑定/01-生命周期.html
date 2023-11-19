@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+</head>
+<body>
+<style type="text/css">
+    .title {
+        color: #0066FF;
+        border: 1px solid #FF0000;
+        display: inline-block;
+        padding: 10px;
+    }
+</style>
+<div id="app">
+    <!--    绑定参数-->
+    <p>{{text}}</p>
+    <!--    绑定属性 常规 缩略-->
+    <span v-bind:class="red_rect"> 书是人类进步的阶梯</span>
+    <br/>
+    <span :[attr]="red_rect"> 书是人类进步的阶梯</span>
+
+    <h1>{{m / n}}</h1>
+    <h2>{{red_rect.toUpperCase()}}</h2>
+
+    邮件地址: {{email}}<br/>
+    QQ号码: {{email.substring(0, email.indexOf('@'))}}
+    <!--    v-if  是否显示 -->
+    <p v-if="show"> 欢迎光临</p>
+    <!-- v-on 绑定事件 -->
+    <button v-on:click="clickShow()">搜索</button>
+
+<!--    动态参数-->
+    <span :[attr]="red_rect"> 书是人类进步的阶梯</span>
+
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script type="text/javascript">
+    const vm = Vue.createApp({
+        data() {
+            return {
+                m: 10,
+                n: 100,
+                attr:"class",
+                text: "山不在高，有仙则名。",
+                red_rect: 'title',
+                email: "2282561186@qq.com",
+                show: true
+            }
+
+        },
+        methods:
+            {
+                clickShow: function () {
+                    console.log("点击搜索");
+                }
+            },
+        beforeCreate: function () {
+            console.log("beforeCreate");
+        },
+        created: function () {
+            console.log("beforeCreate");
+        },
+        beforeMount: function () {
+            console.log("beforeMount")
+        },
+        mounted: function () {
+            console.log("mounted")
+        },
+        beforeUpdate: function () {
+            console.log("beforeUpdate");
+        },
+        update: function () {
+            console.log("update");
+        },
+    }).mount("#app");
+    setTimeout(function () {
+        vm.text = "水不在深，有龙则灵。";
+    }, 2000);
+</script>
+</body>
+</html>

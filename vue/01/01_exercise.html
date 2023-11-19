@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>输出孔子的名言</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{ message }}</h1>
+</div>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script type="text/javascript">
+    // 创建应用程序
+    const vm = Vue.createApp({
+        // 返回数据对象
+        data() {
+            return {
+                message: '学而不思则罔，思而不学则殆' // 注意这里的逗号
+            };
+        }
+    }).mount('#app'); // 注意这里的 mount 函数名正确
+</script>
+
+</body>
+</html>

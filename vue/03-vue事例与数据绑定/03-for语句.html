@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for语句</title>
+</head>
+<body>
+<style>
+    /* 添加一些基本样式，可选 */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div id="app">
+    <table>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>商品名称</th>
+            <th>商品类型</th>
+            <th>商品价格</th>
+        </tr>
+        </thead>
+        <tbody v-for="(goods,index) in goodsList">
+        <tr>
+            <th>{{index + 1}}</th>
+            <th>{{goods.name}}</th>
+            <th>{{goods.type}}</th>
+            <th>{{goods.price}}</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script type="text/javascript">
+    const vm = Vue.createApp({
+        data() {
+            return {
+                goodsList: [
+                    {
+                        name: 1,
+                        type: 2,
+                        price: 10
+                    },
+                    {
+                        name: 1,
+                        type: 2,
+                        price: 10
+                    }
+                ]
+            }
+        }
+    }).mount("#app")
+</script>
+</body>
+</html>

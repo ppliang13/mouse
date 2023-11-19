@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for题目 watch</title>
+</head>
+<body>
+<style>
+    /* 添加一些基本样式，可选 */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div id="app">
+    <table>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>商品名称</th>
+            <th>商品类型</th>
+            <th>商品价格</th>
+            <th>商品总量</th>
+            <th>总价值</th>
+        </tr>
+        </thead>
+        <tbody v-for="(goods,index) in goodsList">
+        <tr>
+            <td>{{index + 1}}</td>
+            <td><input v-model="goods.name"></td>
+            <td><input v-model="goods.type"></td>
+            <td><input v-model="goods.price" type="number" step="0.01"></td>
+            <td><input v-model="goods.count"></td>
+            <td>{{goods.price * goods.count}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script type="text/javascript">
+    function isIntegerString(str) {
+        // 使用正则表达式检查是否是整数
+        return /^-?\d+$/.test(str);
+    }
+    const vm = Vue.createApp({
+        data() {
+            return {
+                goodsList: [
+                    {
+                        name: "苹果",
+                        type: "水果",
+                        price: 10,
+                        count: 100
+                    },
+                    {
+                        name: "数据线",
+                        type: "电子产品",
+                        price: 40,
+                        count: 100
+                    },
+                    {
+                        name: "梨子",
+                        type: "水果",
+                        price: 8,
+                        count: 100
+                    },
+                    {
+                        name: "华为手机",
+                        type: "电子产品",
+                        price: 4000,
+                        count: 100
+                    }
+                ]
+            }
+        },
+        watch: {
+            goodsList: {
+                handler(newVal, oldVal) {
+                    newVal.forEach(item => {
+                        if (!isIntegerString(item.count)) {
+                            console.log(item.count);
+                            window.alert("请输入数字！")
+                            return;
+                        }
+                    });
+                },
+                deep: true
+            }
+        }
+    }).mount("#app");
+</script>
+</body>
+</html>
+
