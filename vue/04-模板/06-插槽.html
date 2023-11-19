@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插槽</title>
+</head>
+<body>
+<div id="app">
+    <demo-slot>{{text}}</demo-slot>
+</div>
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+const vm=Vue.createApp({
+    data() {
+        return {
+            text:'已阅读并同意注册条数',
+        };
+    }
+});
+
+vm.component('demo-slot',{
+    template:`
+    <div class="content">
+      <input type="checkbox">
+      <slot>选中表示同意注册条数</slot>
+    </div>`
+});
+
+vm.mount("#app");
+</script>
+</body>
+</html>
