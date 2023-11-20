@@ -1,15 +1,15 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="快使用Vue CLI构建你的项目"/>
+  <my-demo/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MyDemo from '@/components/MyDemo.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MyDemo
   }
 }
 </script>
