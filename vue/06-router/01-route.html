@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由使用</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        <router-link to="/homepage"> 首页</router-link>
+        <router-link to="/course"> 课程</router-link>
+        <router-link to="/read"> 读书</router-link>
+
+        <router-link v-for="index in 10" :to="'/news/' + index" :key="index">
+            新闻 {{ index }}
+        </router-link>
+    </div>
+
+    <router-view></router-view>
+</div>
+<script src="../js/vue.global.js"></script>
+<script src="../js/vue-router.global.js"></script>
+
+<script type="text/javascript">
+    const homepage = {
+        template: '<p>首页内容</p>'
+    };
+    const course = {
+        template: '<p>课程页面内容</p>'
+    };
+    const read = {
+        template: '<p>读书页面内容</p>'
+    };
+
+    const News = {
+        template: '<p>新闻ID:{{$route.params.id}}</p>'
+    }
+
+    const new_routes = [
+        {path: "/news/:id", component: News}
+    ];
+    const routes = [
+        {path: '/homepage', component: homepage},
+        {path: '/course', component: course},
+        {path: '/read', component: read}
+    ];
+
+    const router = VueRouter.createRouter({
+        history: VueRouter.createWebHashHistory(),
+        routes: [...routes, ...new_routes]
+    });
+
+    const vm = Vue.createApp({});
+    vm.use(router);
+    vm.mount("#app");
+</script>
+</body>
+</html>

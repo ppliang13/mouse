@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<style>
+    body {
+        font-family: 微软雅黑;
+        font-size: 14px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    ul {
+        list-style: none;
+        width: 300px;
+        height: 30px;
+        line-height: 30px;
+        background: green;
+    }
+
+    ul li {
+        float: left;
+        margin-left: 20px;
+    }
+
+    ul li a {
+        color: white;
+    }
+
+    .left {
+        float: left;
+        width: 100px;
+        height: 50px;
+        padding-top: 10px;
+        text-align: center;
+        border-right: 1px solid #666666;
+    }
+
+    .main {
+        float: left;
+        width: 200px;
+        padding-left: 20px;
+    }
+</style>
+<div id="app">
+    <ul>
+        <li>
+            <router-link to="/homepage">首页</router-link>
+        </li>
+        <li>
+            <router-link to="/about">关于我们</router-link>
+        </li>
+    </ul>
+    <router-view class="left" name="left"></router-view>
+    <router-view class="main" name="main"></router-view>
+</div>
+<script src="../js/vue.global.js"></script>
+<script src="../js/vue-router.global.js"></script>
+
+<script type="text/javascript">
+    const HomeLeft = {
+        template: '<div>行业资讯</div>'
+    }
+    const HomeRight = {
+        template:
+            `<div>
+                <div>大数据时代·掌握数据分析技能</div>
+                <div>编程超级魔卡强势来袭</div>
+             </div>`
+    }
+    const AboutLeft = {
+        template: `
+        <div>
+            <div>公司简介</div>
+            <div>特色项目</div>
+        </div>`
+    }
+    const AboutRight = {
+        template: `<div>明日学院</div>`
+    }
+
+    const routes = [
+        {
+            path: '',
+            components: {
+                left: HomeLeft,
+                main: HomeRight
+            },
+            meta:{
+                title:"首页"
+            }
+        }, {
+            path: '/homepage',
+            components: {
+                left: HomeLeft,
+                main: HomeRight
+            },
+            meta:{
+                title:"首页"
+            }
+        }, {
+            path: '/about',
+            components: {
+                left: AboutLeft,
+                main: AboutRight
+            },
+            meta:{
+                title:"关于我们"
+            }
+        }];
+    const router=VueRouter.createRouter({
+        history:VueRouter.createWebHashHistory(),
+        routes
+    });
+    router.beforeEach((to,from,next)=>{
+        document.title=to.meta.title;
+        next();
+    })
+    const vm=Vue.createApp({});
+    vm.use(router);
+    vm.mount("#app");
+</script>
+</body>
+</html>

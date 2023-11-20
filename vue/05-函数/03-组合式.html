@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组合式</title>
+</head>
+<body>
+
+<div id="app">
+    <button v-on:click="add">{{data.number}}</button>
+    <button v-on:click="addNum">{{num}}</button>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const {createApp, ref} = Vue;
+
+    const vm = createApp({
+        //setup 函数
+        setup() {
+            //转换成相应式对象
+            const data = Vue.reactive({
+                number: 10
+            });
+
+            let num=10;
+            function add() {
+                data.number += 1
+            }
+            function addNum() {
+                console.log(num)
+                num += 1
+            }
+            //没有加载到 counter
+            Vue.watchEffect(()=>{
+                // 获取或创建id为counter的元素
+                let counterElement = document.getElementById('counter');
+
+                if (!counterElement) {
+                    // 如果元素不存在，则创建一个新的div元素
+                    counterElement = document.createElement('div');
+                    counterElement.id = 'counter';
+                    document.getElementById('app').appendChild(counterElement);
+                }
+
+                // 更新id为counter的元素的内容
+                counterElement.innerText = `计数器: ${data.number}`;
+            });
+            setInterval(()=>{
+                data.number++;
+            },1000);
+            return{
+                data,add,num,addNum
+            }
+        }
+    }).mount("#app");
+
+</script>
+</body>
+</html>

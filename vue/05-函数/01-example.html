@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button @click="count++">Count is: {{ count }}</button>
+</div>
+
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const {createApp, ref} = Vue;
+    createApp({
+        setup() {
+            // 使用ref创建响应式数据
+            const count = ref(0);
+            // 返回数据以在模板中使用
+            return {
+                count
+            };
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
