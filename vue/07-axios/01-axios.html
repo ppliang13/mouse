@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button v-on:click="ReqJSON">获取json数据</button>
+    <div v-html="message"></div>
+</div>
+<script src="../js/axios.min.js"></script>
+<script src="../js/vue.global.js"></script>
+<script type="text/javascript">
+    const vm = Vue.createApp({
+        data() {
+            return {
+                message: ""
+            }
+        },
+        methods: {
+            ReqJSON: function () {
+                axios({
+                    method: 'get',
+                    url: 'data.json'
+                }).then(function (response) {
+                    let str = "";
+                    let data = JSON.stringify(response.data);
+                    data = JSON.parse(data);
+                    for (const key in data) {
+                        console.log(key);
+                        str += key + ": " + data[key] + "<br>";
+                    }
+                    this.message = str;
+                }.bind(this));
+            }
+        }
+    });
+    vm.mount("#app")
+</script>
+</body>
+</html>
