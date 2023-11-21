@@ -1,15 +1,14 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <my-demo/>
+  <vditor></vditor>
 </template>
 
 <script>
-import MyDemo from '@/components/MyDemo.vue'
+import Vditor from "@/components/vditor.vue";
 
 export default {
   name: 'App',
   components: {
-    MyDemo
+    Vditor
   }
 }
 </script>
